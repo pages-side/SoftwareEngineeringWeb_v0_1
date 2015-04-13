@@ -22,9 +22,9 @@
 
 				<tr>
 					<td>Customer Number:</td>
-					<td><%=c.getCno() %></td>
+					<td><%=c.getCompanyNo() %></td>
 					<td>Customer Name:</td>
-					<td><%=c.getCname() %></td>
+					<td><%=c.getCName() %></td>
 				</tr>
 				<tr>
 					<td>Street:</td>

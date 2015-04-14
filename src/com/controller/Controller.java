@@ -42,7 +42,7 @@ public class Controller extends HttpServlet {
 				session.setAttribute("result", bean);
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
-			rd.forward(request, response);
+			
 		}else if("customer".equalsIgnoreCase(requester)){
 			CustomerCommand cmd = new CustomerCommand();
 			if(!cmd.execute()){
@@ -65,7 +65,6 @@ public class Controller extends HttpServlet {
 				session.setAttribute("result", bean);
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
-			rd.forward(request, response);
 		}else if("login".equalsIgnoreCase(requester)){
 			LoginCommand cmd = new LoginCommand();
 			cmd.setParameters(getParameters(request));
@@ -76,6 +75,7 @@ public class Controller extends HttpServlet {
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
 		}
+		rd.forward(request, response);
 	}
 	private synchronized ArrayList<CommandParameter>getParameters(HttpServletRequest request){
 		ArrayList<CommandParameter>paramList = new ArrayList<CommandParameter>();

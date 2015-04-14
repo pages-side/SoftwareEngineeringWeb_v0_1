@@ -6,19 +6,21 @@ import com.beans.CompanyBean;
 import com.business.Company;
 import com.command.parameters.CommandParameter;
 import com.dataaccess.select.SelectCompany;
+import com.dataaccess.select.SelectUser;
 
 public class LoginCommand {
 	String userName = null;
 	String password = null;
 	String forwardingPage = null;
 	public boolean execute(){
-		SelectCompany da = new SelectCompany();
+		SelectUser da = new SelectUser();
 		//pass it the query you would from the command line (this is specific to the da)
-		da.setQuery("Select * from Company");
+		da.setUserName(this.userName);
+		da.setPassword(this.password);
 		if(!da.execute()){
-			forwardingPage = "failedLogin.jsp";
+			forwardingPage = "/failedLogin.jsp";
 		}else{
-			forwardingPage = "landingPage.jsp";	
+			forwardingPage = "/landingPage.jsp";	
 		}
 		
 		return true;

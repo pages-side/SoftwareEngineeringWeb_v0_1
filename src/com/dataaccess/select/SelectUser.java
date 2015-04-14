@@ -21,10 +21,9 @@ public class SelectUser extends DbAccessor {
 	
 	
 	public boolean execute(){
-		boolean isSuccess = false;
 		StringBuilder sb = new StringBuilder("");
 		sb.append("Select USER_NAME, PASSWORD ");
-		sb.append(" from S_USERS");
+		sb.append(" from s_login");
 		sb.append(" where");
 		sb.append(" USER_NAME='");
 		sb.append(this.userName);
@@ -32,8 +31,9 @@ public class SelectUser extends DbAccessor {
 		sb.append(" and PASSWORD='");
 		sb.append(this.password);
 		sb.append("'");
-		
-		return isSuccess;
+		setQuery(sb.toString());
+		System.out.println(sb.toString());
+		return super.execute();
 	}
 	
 	public boolean processResult(ResultSet rs){
@@ -48,6 +48,16 @@ public class SelectUser extends DbAccessor {
 			return false;
 		}
 	}
-	
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sharkey's Gameroom</title>
+<title>Sharky's Gameroom</title>
 </head>
 <body>
 	<form action="Controller" method="post">

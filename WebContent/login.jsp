@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sharkey's Gameroom</title>
+<title>Sharky's Gameroom</title>
 </head>
 <body>
 	<form action="Controller" method="post">
@@ -14,7 +14,7 @@
 		<table style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;" bgcolor="#008B8B" height="100%" width="100%">
 			<tbody>
 				<tr style="height:50%;text-align:center; font-size:80px; color:#FFFFFF;">
-				<td>Welcome to Sharkey's</td>
+				<td>Welcome to Sharky's</td>
 				<td bgColor="#008B8B"  style="font-size:20px; text-align:bottom">
 						<table >
 							<tr>

@@ -44,6 +44,7 @@ public class DbAccessor extends DbConn {
 				}
 			}
 			session.disconnect();
+			session = null;
 		}
 
 		return isSuccess;

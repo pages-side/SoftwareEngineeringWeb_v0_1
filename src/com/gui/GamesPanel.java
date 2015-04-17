@@ -28,94 +28,73 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import com.dataaccess.DbAccessor;
 import com.dataaccess.DbConn;
-import com.dataaccess.delete.DeleteProduct;
 
 *//**
  * A class that creates the content of the Manage Games List Window
  *
- * @author  Kelsey Smith
+ * @author Kelsey Smith
  * @version 1.0, 04/08/15
  *//*
 public class GamesPanel {
+
+	// class constants
 	private static final int PREF_W = 500;
 	private static final int PREF_H = 500;
+	private static final int ROW_H = 35;
+	private static final int IDCOL_W = 80;
+	private static final int NAMECOL_W = 160;
+	private static final int PLATCOL_W = 120;
+	private static final int buttonPanel_H = 50;
+	private static final int printButton_W = 45;
+	private static final int printButton_H = 45;
+	private static final int scrollPane_H = 450;
+	private static final int nameCharLimit = 25;
+	private static final String printButtonPath = "";
+	private static final String deleteButtonPath = "";
+
+	// GamesPanel member variables
+	private JPanel combinedPanel;
 	private JPanel mainPanel;
 	private JTable table;
 	private JButton printButton;
 	private JButton addGameButton;
 	private JPanel buttonPanel;
 	private ImageIcon deleteIcon;
+	private AbstractAction delete;
+	private AbstractAction save;
+	private AbstractAction edit;
 
 	*//**
 	 * Constructor for GamesPanel
 	 *//*
 	public GamesPanel() {
-
-		// create buttons
-		printButton = new JButton();
-		addGameButton = new JButton("Add Game");
-		try {
-			Image img = ImageIO.read(getClass().getResource("smallprint.png"));
-			printButton.setIcon(new ImageIcon(img));
-			Image deleteImg = ImageIO.read(getClass().getResource(
-					"deletebuttonsmall.png"));
-			deleteIcon = new ImageIcon(deleteImg);
-		} catch (IOException ex) {
-			System.out.println("Image not found");
-		}
-
+		// create main panel
 		mainPanel = new JPanel();
 		mainPanel.setBorder(null);
 		mainPanel.setPreferredSize(new Dimension(PREF_W, PREF_H));
 
-		// create report table
-		table = new JTable(new DefaultTableModel(new Object[] { "Game I.D.",
-				"Game Name", "Game Platform", "Delete Game" }, 0));
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-		table.getColumnModel().getColumn(0).setPreferredWidth(120);
-		table.getColumnModel().getColumn(1).setPreferredWidth(120);
-		table.getColumnModel().getColumn(2).setPreferredWidth(120);
-		table.setRowHeight(35);
-		populateTable();
-		JScrollPane pane1 = new JScrollPane(table);
+		combinedPanel = new JPanel();
+		combinedPanel.setBorder(null);
+		combinedPanel.setPreferredSize(new Dimension(PREF_W, PREF_H));
 
-		// create delete game column
-		AbstractAction delete = new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				//create confirmation popup
-				int selectedOption = JOptionPane.showConfirmDialog(null,
-						new JLabel(
-								"Are you sure you want to delete this game? "),
-								"Remove Game", JOptionPane.YES_NO_OPTION);
-				//delete entry from database
-				if (selectedOption == JOptionPane.YES_OPTION) {
+		// create buttons
+		printButton = new JButton();
+		printButton
+				.setPreferredSize(new Dimension(printButton_W, printButton_H));
+		try {
+			Image img = ImageIO.read(getClass().getResource(printButtonPath));
+			printButton.setIcon(new ImageIcon(img));
+			Image deleteImg = ImageIO.read(getClass().getResource(
+					deleteButtonPath));
+			deleteIcon = new ImageIcon(deleteImg);
+		} catch (IOException ex) {
+			System.err.println("Image not found");
+		}
+		table = new JTable(new MyModel(new Object[] { "Game I.D.", "Game Name",
+				"Game Platform", "Edit", "Save", "Delete" }, 0));
 
-
-
-					int modelRow = Integer.valueOf(e.getActionCommand());
-					DeleteProduct daDelete = new DeleteProduct();
-					daDelete.setPno(table.getValueAt(modelRow, 0) + "'");
-					if(!daDelete.execute()){
-						TODO - better errorhandling here
-						System.err.println("Unable to delete " + table.getValueAt(modelRow, 0) + "'");
-					}else{
-						((DefaultTableModel) table.getModel()).removeRow(modelRow);	
-					}
-
-
-				}
-			}
-		}; // end delete entry from database
-
-		ButtonColumn buttonColumn = new ButtonColumn(table, delete, 3);
-
-		// create button Panel
-		buttonPanel = new JPanel();
-		buttonPanel.setPreferredSize(new Dimension(PREF_W, 50));
-		buttonPanel.setLayout(new BorderLayout());
-
+		addGameButton = new JButton("Add Game");
 		addGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JPanel panel = new JPanel(new BorderLayout(5, 5));
@@ -126,12 +105,13 @@ public class GamesPanel {
 				panel.add(label, BorderLayout.WEST);
 				JPanel controls = new JPanel(new GridLayout(0, 1, 2, 2));
 
-				//create game name textfield with length limit of 25 characters
+				// create game name textfield with character limit
 				JTextField gameNameTextField = new JTextField();
-				gameNameTextField.setDocument(new FixedSizeDocument(25));
+				gameNameTextField.setDocument(new FixedSizeDocument(
+						nameCharLimit));
 				controls.add(gameNameTextField);
 
-				//prepopulate combobox with existing platforms
+				// prepopulate combobox with existing platforms
 				final DefaultComboBoxModel platforms = new DefaultComboBoxModel();
 				platforms.addElement("Wii");
 				platforms.addElement("Xbox");
@@ -143,7 +123,7 @@ public class GamesPanel {
 				int selectedOption = JOptionPane.showConfirmDialog(null, panel,
 						"Add Game", JOptionPane.OK_CANCEL_OPTION);
 
-				//if user chooses to add game
+				// if user chooses to add game, add new game entity to database
 				if (selectedOption == JOptionPane.OK_OPTION) {
 					Connection conn = null;
 					Statement stmt = null;
@@ -167,9 +147,26 @@ public class GamesPanel {
 						}
 						model.addRow(new Object[] { maxID,
 								gameNameTextField.getText(),
-								platformCombo.getSelectedItem(), deleteIcon });
-						System.out.println("row added");
-
+								platformCombo.getSelectedItem(), "Edit",
+								"Save", deleteIcon });
+						ButtonColumn deletebuttonColumn = new ButtonColumn(
+								table, delete, 5);
+						ButtonColumn editButtonColumn = new ButtonColumn(table,
+								edit, 3);
+						ButtonColumn saveButtonColumn = new ButtonColumn(table,
+								save, 4);
+						((MyModel) model).addCell(model.getRowCount() - 1, 0,
+								false);
+						((MyModel) model).addCell(model.getRowCount() - 1, 1,
+								false);
+						((MyModel) model).addCell(model.getRowCount() - 1, 2,
+								false);
+						((MyModel) model).addCell(model.getRowCount() - 1, 3,
+								true);
+						((MyModel) model).addCell(model.getRowCount() - 1, 4,
+								false);
+						((MyModel) model).addCell(model.getRowCount() - 1, 5,
+								true);
 					} catch (SQLException err) {
 						System.err.println(err.getMessage());
 					} finally {
@@ -195,27 +192,182 @@ public class GamesPanel {
 					}
 				}
 			}
-		}); //end add game
+		}); // end add game
+		// create delete game column
+		delete = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				// create confirmation popup
+				int selectedOption = JOptionPane.showConfirmDialog(null,
+						new JLabel(
+								"Are you sure you want to delete this game? "),
+						"Remove Game", JOptionPane.YES_NO_OPTION);
+				// delete entry from database
+				if (selectedOption == JOptionPane.YES_OPTION) {
+					Connection conn = null;
+					Statement stmt = null;
+					try {
+						DbConn dbConn = new DbConn();
+						conn = dbConn.getConn();
+						stmt = conn.createStatement();
+						int modelRow = Integer.valueOf(e.getActionCommand());
+						stmt.executeUpdate("delete from s_product where pno = '"
+								+ table.getValueAt(modelRow, 0) + "'");
+						((DefaultTableModel) table.getModel())
+								.removeRow(modelRow);
+					} catch (SQLException err) {
+						System.err.println(err.getMessage());
+					} finally {
+						if (stmt != null) {
+							try {
+								stmt.close();
+							} catch (SQLException sqle) {
+							}
+						}
+						if (conn != null) {
+							try {
+								conn.close();
+							} catch (SQLException sqle) {
+							}
+						}
+						if (DbConn.getSession() != null) {
+							DbConn.getSession().disconnect();
+							DbConn.setSession(null);
+						}
+						if (DbConn.getConn() != null) {
+							DbConn.setConnection(null);
+						}
+					}
+				}
+			}
+		}; // end delete entry from database
 
-		printButton.setPreferredSize(new Dimension(45, 45));
+		save = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				if ((table.getValueAt(modelRow, 2).equals("Wii") || table
+						.getValueAt(modelRow, 2).equals("Xbox"))
+						&& ((String) table.getValueAt(modelRow, 1)).length() < 26) {
+					Connection conn = null;
+					Statement stmt = null;
+					try {
+						DbConn dbConn = new DbConn();
+						conn = dbConn.getConn();
+						stmt = conn.createStatement();
+						stmt.executeUpdate("update s_product set name = '"
+								+ table.getValueAt(modelRow, 1)
+								+ "' where pno = '"
+								+ table.getValueAt(modelRow, 0) + "'");
+						stmt.executeUpdate("update s_product set platform = '"
+								+ table.getValueAt(modelRow, 2)
+								+ "' where pno = '"
+								+ table.getValueAt(modelRow, 0) + "'");
+						((MyModel) table.getModel())
+								.setCellEditable(
+										Integer.valueOf(e.getActionCommand()),
+										1, false);
+						((MyModel) table.getModel())
+								.setCellEditable(
+										Integer.valueOf(e.getActionCommand()),
+										2, false);
+					} catch (SQLException err) {
+						System.err.println(err.getMessage());
+					} finally {
+						if (stmt != null) {
+							try {
+								stmt.close();
+							} catch (SQLException sqle) {
+							}
+						}
+						if (conn != null) {
+							try {
+								conn.close();
+							} catch (SQLException sqle) {
+							}
+						}
+						if (DbConn.getSession() != null) {
+							DbConn.getSession().disconnect();
+							DbConn.setSession(null);
+						}
+						if (DbConn.getConn() != null) {
+							DbConn.setConnection(null);
+						}
+					}
+					//make the edit button editable and save button not editable
+					((MyModel) table.getModel()).setCellEditable(
+							Integer.valueOf(e.getActionCommand()), 3, true);
+					((MyModel) table.getModel()).setCellEditable(
+							Integer.valueOf(e.getActionCommand()), 4, false);
+				} else {
+					// custom title, error icon
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"Error saving. Please make sure that the game name is at most 25"
+											+ "\n"
+											+ "characters and that the platform is spelled and capitalized correctly.",
+									"error", JOptionPane.ERROR_MESSAGE);
+				}
 
-		pane1.setBackground(Color.decode("#FFFFFF"));
-		pane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		pane1.setPreferredSize(new Dimension(PREF_W, PREF_H - 50));
+			}
+		}; // end save entry from database
 
-		// add buttons and report to window
-		mainPanel.setLayout(new FlowLayout());
+		edit = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				// makes the game name and game platform columns editable
+				((MyModel) table.getModel()).setCellEditable(
+						Integer.valueOf(e.getActionCommand()), 1, true);
+				((MyModel) table.getModel()).setCellEditable(
+						Integer.valueOf(e.getActionCommand()), 2, true);
+				
+				//make the save button editable and edit button not editable
+				((MyModel) table.getModel()).setCellEditable(
+						Integer.valueOf(e.getActionCommand()), 3, false);
+				((MyModel) table.getModel()).setCellEditable(
+						Integer.valueOf(e.getActionCommand()), 4, true);
+			}
+		}; // end edit entry from database
+
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		table.getColumnModel().getColumn(0).setPreferredWidth(IDCOL_W);
+		table.getColumnModel().getColumn(1).setPreferredWidth(NAMECOL_W);
+		table.getColumnModel().getColumn(2).setPreferredWidth(PLATCOL_W);
+		table.setRowHeight(ROW_H);
+
+		// populate table with existing games
+		populateTable();
+
+		// create scroll pane that contains the games list table
+		JScrollPane tableScrollPane = new JScrollPane(table);
+		tableScrollPane.setBackground(Color.decode("#FFFFFF"));
+		tableScrollPane
+				.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		tableScrollPane.setPreferredSize(new Dimension(PREF_W, scrollPane_H));
+
+		// Make delete game column with delete buttons
+		ButtonColumn editButtonColumn = new ButtonColumn(table, edit, 3);
+		ButtonColumn saveButtonColumn = new ButtonColumn(table, save, 4);
+		ButtonColumn deletebuttonColumn = new ButtonColumn(table, delete, 5);
+
+		// create Buttons Panel with add and print buttons
+		buttonPanel = new JPanel();
+		buttonPanel.setPreferredSize(new Dimension(PREF_W, buttonPanel_H));
+		buttonPanel.setLayout(new BorderLayout());
 		buttonPanel.add(printButton, BorderLayout.LINE_START);
 		buttonPanel.add(addGameButton, BorderLayout.LINE_END);
-		mainPanel.add(buttonPanel, BorderLayout.PAGE_START);
-		mainPanel.add(pane1, BorderLayout.PAGE_END);
+
+		// add buttons and table to main panel
+		combinedPanel.setLayout(new FlowLayout());
+		combinedPanel.add(buttonPanel, BorderLayout.PAGE_START);
+		combinedPanel.add(tableScrollPane, BorderLayout.PAGE_END);
+		mainPanel.add(combinedPanel, BorderLayout.CENTER);
 	}
 
 	*//**
-	 * Returns the main panel of the Manage Games List frame 
+	 * Returns the main panel of the Manage Games List frame
 	 *
-	 * @param     N/A
-	 * @return    the panel that contains all functions of Manage Games List
+	 * @param N
+	 *            /A
+	 * @return the panel that contains all functions of Manage Games List
 	 *//*
 	public JPanel getMainPanel() {
 		return mainPanel;
@@ -224,8 +376,9 @@ public class GamesPanel {
 	*//**
 	 * Populates the Games List Table with all games in the database
 	 *
-	 * @param     N/A
-	 * @return    N/A
+	 * @param N
+	 *            /A
+	 * @return N/A
 	 *//*
 	public void populateTable() {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -245,8 +398,16 @@ public class GamesPanel {
 				String id = rs.getString("pno");
 				String name = rs.getString("name");
 				String platform = rs.getString("platform");
-				model.addRow(new Object[] { id, name, platform, deleteIcon });
+				model.addRow(new Object[] { id, name, platform, "Edit", "Save",
+						deleteIcon });
+				((MyModel) model).addCell(model.getRowCount() - 1, 0, false);
+				((MyModel) model).addCell(model.getRowCount() - 1, 1, false);
+				((MyModel) model).addCell(model.getRowCount() - 1, 2, false);
+				((MyModel) model).addCell(model.getRowCount() - 1, 3, true);
+				((MyModel) model).addCell(model.getRowCount() - 1, 4, false);
+				((MyModel) model).addCell(model.getRowCount() - 1, 5, true);
 			}
+
 		} catch (SQLException err) {
 			System.err.println(err.getMessage());
 		} finally {

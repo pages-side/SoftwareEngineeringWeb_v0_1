@@ -16,7 +16,7 @@
 				<tr style="height:50%;text-align:center; font-size:80px; color:#FFFFFF;">
 				<td>Welcome to Sharky's</td>
 				<td bgColor="#008B8B"  style="font-size:20px; text-align:bottom">
-						<table >
+						<table style="margin-top:350px;">
 							<tr>
 								<td>UserName:</td>
 								<td><input type="text" name="username" /></td>

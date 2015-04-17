@@ -40,7 +40,7 @@ here
 				<tr style="height: 80%; text-align: center; font-size: 16px;">
 					<td style="width: 50%;">&nbsp;</td>
 					<td style="bg-color: #FFFFFF; vertical-align:top;" >
-						<table style=" border: 1px solid black; margin-bottom:50px;" border=1 bgcolor="#FFFFFF">
+						<table border=1 style=" border: 1px solid white; margin-bottom:50px; background-color:#191970 ;color:#7FFFD4;">
 							<tr>
 								<td colspan="3" height="10%" style="font-weight:bold; font-size:20px;">Currently Playing</td>
 							
@@ -63,16 +63,16 @@ here
 								</select>
 							</tr>
 							</table>
-							<table style="width:100%; border: 1px solid black" border=1 bgcolor="#FFFFFF">
+							<table style="width:100%; border: 1px solid black; color:#191970;" border=1 bgcolor="#7FFFD4">
 							<tr>
-								<td colspan="3" height="10%">Add a Customer</td>
+								<td colspan="3" height="10%;" style="font-weight:bold; font-size:20px;">Add a Customer</td>
 							
 							</tr>
 							<tr style="height: 10%; bg-color: #FFFFFF">
-								<td style="width: 15%;height:5%;">Cust No: <br/><input type="text" name="customerNo">
+								<td style="width: 15%;height:5%;font-weight:bold;">Cust No: <br/><input type="text" name="customerNo">
 								</td>
-								<td style="width: 15%;height:5%;">Customer Name: <br/><input type="text"	name="customerNo"></td>
-								<td style="width: 15%;height:5%;">Game:<br/><select name="customergameadd">
+								<td style="width: 15%;height:5%;font-weight:bold;">Customer Name: <br/><input type="text"	name="customerNo"></td>
+								<td style="width: 15%;height:5%;font-weight:bold;">Game:<br/><select name="customergameadd">
 										<option value="pool1">Pool (1)</option>
 										<option value="pool2">Pool (2)</option>
 										<option value="pool3">Pool (3)</option>
@@ -83,7 +83,7 @@ here
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3" style="height:5%;"><input type="button" value="Add"
+								<td colspan="3" style="height:5%;"><input type="button" value="Add" style="background-color:#191970 ;color:#7FFFD4; font-weight:bold; padding: 2 2 2 2"
 									onclick="document.getElementById('requester').value='add'; form.submit();" /></td>
 							</tr>
 						</table>

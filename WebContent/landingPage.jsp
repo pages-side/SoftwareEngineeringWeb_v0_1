@@ -13,7 +13,7 @@ rules
  
 here
 </style>
-<title>Sharky's Gameroom</title>
+<title>Sharky's Game Room</title>
 </head>
 <body>
 	<form action="Controller" method="post">
@@ -29,7 +29,7 @@ here
 					<td>
 						<table>
 							<tr>
-							<td>Welcome to Sharky's:<%=request.getSession().getAttribute("USER")%></td>
+							<td>Logged in as <%=request.getSession().getAttribute("USER")%></td>
 							<td>Menu1</td>
 							<td>Menu2</td>
 							<td>Menu3</td>

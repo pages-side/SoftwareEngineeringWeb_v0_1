@@ -19,11 +19,22 @@ public class DbAccessor extends DbConn {
 			//DbConn dbconn = new DbConn();
 			
 			statement = conn.createStatement();
-			ResultSet rs = statement.executeQuery(query);
-			if(!processResult(rs)){
-				return false;
-			}else{
+			if(isUpdate){
+				try{
+				statement.execute(query);
 				return true;
+				}catch(Exception e){
+					errorMessage = e.getMessage();
+					e.printStackTrace();
+					return false;
+				}
+			}else{
+				ResultSet rs = statement.executeQuery(query);
+				if(!processResult(rs)){
+					return false;
+				}else{
+					return true;
+				}
 			}
 		} catch (SQLException e ) {
 			e.printStackTrace();

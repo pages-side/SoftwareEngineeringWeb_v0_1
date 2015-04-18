@@ -3,6 +3,7 @@ package com.commands;
 import java.util.ArrayList;
 
 import com.beans.CompanyBean;
+import com.beans.LandingPageBean;
 import com.business.Company;
 import com.command.parameters.CommandParameter;
 import com.dataaccess.select.SelectCompany;
@@ -12,6 +13,8 @@ public class LoginCommand {
 	String userName = null;
 	String password = null;
 	String forwardingPage = null;
+	String errorMessage = "";
+	LandingPageBean results = new LandingPageBean();
 	public boolean execute(){
 		SelectUser da = new SelectUser();
 		//pass it the query you would from the command line (this is specific to the da)
@@ -20,7 +23,15 @@ public class LoginCommand {
 		if(!da.execute()){
 			forwardingPage = "/failedLogin.jsp";
 		}else{
-			forwardingPage = "/landingPage.jsp";	
+			LandingPageCommand cmd = new LandingPageCommand();
+			if(!cmd.execute()){
+				this.errorMessage = this.errorMessage + "/n" + "Error loading landing page";
+				forwardingPage = "errorPage";
+			}else{
+				results.setCurrentCustomerList(cmd.getCurrentCustomerList());
+				results.setFinishedCustomerList(cmd.getFinishedCustomerList());
+				forwardingPage = "landingPage.jsp";
+			}
 		}
 		
 		return true;
@@ -49,4 +60,17 @@ public class LoginCommand {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+	public LandingPageBean getResults() {
+		return results;
+	}
+	public void setResults(LandingPageBean results) {
+		this.results = results;
+	}
+	
 }

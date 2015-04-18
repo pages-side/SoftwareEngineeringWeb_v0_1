@@ -14,8 +14,10 @@ import com.beans.CompanyBean;
 import com.beans.CustomerBean;
 import com.beans.GameBean;
 import com.command.parameters.CommandParameter;
+import com.commands.AddCurrentCustomerCommand;
 import com.commands.CompanyCommand;
 import com.commands.CustomerCommand;
+import com.commands.EndCurrentCustomerCommand;
 import com.commands.GameCommand;
 import com.commands.LoginCommand;
 
@@ -65,6 +67,15 @@ public class Controller extends HttpServlet {
 				session.setAttribute("result", bean);
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
+		}else if("add".equalsIgnoreCase(requester)){
+			AddCurrentCustomerCommand cmd = new AddCurrentCustomerCommand();
+			cmd.setParameters(getParameters(request));
+			if(!cmd.execute()){
+				rd = request.getRequestDispatcher("/error.jsp");
+			}else{
+				request.setAttribute("results", cmd.getResults());
+				rd = request.getRequestDispatcher(cmd.getForwardingPage());
+			}
 		}else if("login".equalsIgnoreCase(requester)){
 			LoginCommand cmd = new LoginCommand();
 			cmd.setParameters(getParameters(request));
@@ -72,6 +83,16 @@ public class Controller extends HttpServlet {
 				rd = request.getRequestDispatcher("/error.jsp");
 			}else{
 				session.setAttribute("USER", cmd.getUserName());
+				request.setAttribute("results", cmd.getResults());
+				rd = request.getRequestDispatcher(cmd.getForwardingPage());
+			}
+		}else if("finish".equalsIgnoreCase(requester)){
+			EndCurrentCustomerCommand cmd = new EndCurrentCustomerCommand();
+			cmd.setParameters(getParameters(request));
+			if(!cmd.execute()){
+				rd = request.getRequestDispatcher("/error.jsp");
+			}else{
+				request.setAttribute("results", cmd.getResults());
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
 		}
@@ -85,6 +106,7 @@ public class Controller extends HttpServlet {
 			cp.setName(key);
 			cp.setValue(request.getParameter(key));
 			paramList.add(cp);
+			System.out.println(cp.toString());
 		}
 		return paramList;
 		

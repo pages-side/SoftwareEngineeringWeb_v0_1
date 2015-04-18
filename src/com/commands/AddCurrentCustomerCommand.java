@@ -30,6 +30,7 @@ public class AddCurrentCustomerCommand {
 			forwardingPage = "errorPage";
 		}else{
 			results.setCurrentCustomerList(cmd.getCurrentCustomerList());
+			results.setFinishedCustomerList(cmd.getFinishedCustomerList());
 			forwardingPage = "landingPage.jsp";
 		}
 		return isSuccess;

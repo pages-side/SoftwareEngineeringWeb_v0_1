@@ -34,8 +34,10 @@ here
 	<form action="Controller" method="post">
 
 		<input type="hidden" id="requester" name="requester" value="login" />
-		<input type="hidden" name="mode" value="search" />
-		<input type="hidden" name="cno" id="cno"value="" />
+		<input type="hidden" name="mode" value="" />
+		<input type="hidden" name="cno" id="cno" value="" />
+		<input type="hidden" name="game" id="game" value="" />
+		<input type="hidden" name="cname" id="cname" value="" />
 		<table
 			style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"
 			bgcolor="#008B8B" height="100%" width="100%">
@@ -79,9 +81,16 @@ here
 								<td style="width: 15%; height: 5%;"><%=customerList.get(ii).getCno()%>
 									<input type="hidden" name="cno <%=ii %>" id="cno<%=ii %>" value="<%=customerList.get(ii).getCno()%>"/>
 								</td>
-								<td style="width: 15%; height: 5%;"><%=customerList.get(ii).getCname()%></td>
-								<td style="width: 15%; height: 5%;"><select	name="currentgame<%=ii %>" style="vertical-align: top; margin-top: 10px;"
-								onchange="document.getElementById('cno').value=document.getElementById('cno<%=ii%>').value;document.getElementById('requester').value = 'transer'; form.submit();">
+								<td style="width: 15%; height: 5%;"><%=customerList.get(ii).getCname()%>
+									<input type="hidden" name="customername<%=ii %>" id="customername<%=ii %>" value="<%= customerList.get(ii).getCname()%>" />
+								</td>
+								<td style="width: 15%; height: 5%;"><select	id="currentgame<%=ii %>" name="currentgame<%=ii %>" style="vertical-align: top; margin-top: 10px;"
+								onchange="var e = document.getElementById('currentgame<%=ii %>');
+											document.getElementById('game').value = e.options[e.selectedIndex].value;
+											document.getElementById('cname').value = document.getElementById('cnameM<%=ii %>').value; 
+											document.getElementById('cno').value=document.getElementById('cno<%=ii%>').value;
+											document.getElementById('requester').value = 'transer'; 
+											form.submit();">
 										<option
 											<%if (customerList.get(ii).getCurrentGame().equals("pool1")) {%>
 											selected="selected" <%}%> value="pool1">Pool (1)</option>
@@ -100,7 +109,8 @@ here
 										<option
 											<%if (customerList.get(ii).getCurrentGame().equals("wii")) {%>
 											selected="selected" <%}%> value="wii">Wii</option>
-								</select> <input name='finish-<%=ii %>' value="<%=customerList.get(ii).getCno()%>" type="image" src="images/deletebuttonsmall.png" 
+								</select> 
+								<input name='finish-<%=ii %>' value="<%=customerList.get(ii).getCno()%>" type="image" src="images/deletebuttonsmall.png" 
 								onclick="document.getElementById('cno').value=document.getElementById('cno<%=ii%>').value;document.getElementById('requester').value = 'finish'; form.submit();"/></td>
 							</tr>
 							<%

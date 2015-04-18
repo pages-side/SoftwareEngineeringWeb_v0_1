@@ -35,9 +35,8 @@ public class SelectCurrentCustomers extends DbAccessor {
 			sb.append("GAME_PLAYING,");
 			sb.append("TIME_STARTED,");
 			sb.append("TIME_ENDED,");
-			sb.append("STATUS,");
-			sb.append("MEMBER_STATUS");
-			sb.append(" FROM s_customer");
+			sb.append("STATUS");
+			sb.append(" FROM s_current");
 			sb.append(" WHERE STATUS='");
 			sb.append(GlobalConstants.ACTIVE_STATUS);
 			sb.append("' OR STATUS='");
@@ -61,7 +60,6 @@ public class SelectCurrentCustomers extends DbAccessor {
 			customer.setEndTime(rs.getString("TIME_ENDED"));
 			customer.setCurrentStatus(rs.getString("STATUS"));
 			customer.setCurrentGame(rs.getString("GAME_PLAYING"));
-			customer.setMemberStatus(rs.getBoolean("MEMBER_STATUS"));
 			if(GlobalConstants.ACTIVE_STATUS.equals(customer.getCurrentStatus())){
 				currentCustomerList.add(customer);	
 			}else{

@@ -17,7 +17,7 @@ public class InsertCurrentCustomer extends DbAccessor{
 	
 	public boolean execute(){
 		StringBuilder sb = new StringBuilder("");
-		sb.append("INSERT INTO s_customer ");
+		sb.append("INSERT INTO s_current");
 		sb.append(" (");
 		sb.append("cno,");
 		sb.append("cname,");

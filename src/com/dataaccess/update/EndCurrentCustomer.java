@@ -15,7 +15,7 @@ public class EndCurrentCustomer extends DbAccessor{
 	
 	public boolean execute(){
 		StringBuilder sb = new StringBuilder("");
-		sb.append("UPDATE s_customer SET ");
+		sb.append("UPDATE s_current SET ");
 		sb.append("STATUS='");
 		sb.append(GlobalConstants.INACTIVE_STATUS);
 		sb.append("',");

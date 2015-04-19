@@ -24,12 +24,12 @@ public class SelectGame extends DbAccessor {
 		boolean isSuccess = false;
 		while(rs.next()){
 			Game game = new Game();
-			game.setPno(rs.getInt("COMPANY_NO"));
-			game.setPname(rs.getString("COMPANY_NAME"));
-			game.setPlatform(rs.getString("STREET"));
-			game.setPurchase_date(rs.getString("CITY"));
-			game.setTotal_time_played(rs.getInt("COMPANY_STATE"));
-			game.setBroken(rs.getBoolean("ZIP"));
+			game.setPno(rs.getString("PRODUCT_NO"));
+			game.setPname(rs.getString("PRODUCT_NAME"));
+			game.setPlatform(rs.getString("PLATFORM"));
+			game.setPurchase_date(rs.getString("PURCHASE_DATE"));
+			game.setTotal_time_played(rs.getInt("TIME_PLAYED"));
+			game.setBroken(rs.getBoolean("BROKEN"));
 			gameList.add(game);
 			isSuccess = true;
 		}

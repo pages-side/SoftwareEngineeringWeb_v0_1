@@ -15,6 +15,9 @@ import com.beans.CustomerBean;
 import com.beans.GameBean;
 import com.command.parameters.CommandParameter;
 import com.commands.AddCurrentCustomerCommand;
+import com.commands.AddEmployeeCommand;
+import com.commands.AddGameCommand;
+import com.commands.AddMemberCommand;
 import com.commands.CompanyCommand;
 import com.commands.CustomerCommand;
 import com.commands.EndCurrentCustomerCommand;
@@ -32,6 +35,7 @@ public class Controller extends HttpServlet {
 
 	protected synchronized void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String requester = request.getParameter("requester");
+		System.out.println(requester);
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		if("company".equalsIgnoreCase(requester)){
@@ -95,6 +99,35 @@ public class Controller extends HttpServlet {
 				request.setAttribute("results", cmd.getResults());
 				rd = request.getRequestDispatcher(cmd.getForwardingPage());
 			}
+		}else if("addmember".equalsIgnoreCase(requester)){
+			AddMemberCommand cmd = new AddMemberCommand();
+			cmd.setParameters(getParameters(request));
+			if(!cmd.execute()){
+				rd = request.getRequestDispatcher("/error.jsp");
+			}else{
+				request.setAttribute("results", cmd.getResults());
+				rd = request.getRequestDispatcher(cmd.getForwardingPage());
+			}
+		}else if("addgame".equalsIgnoreCase(requester)){
+			AddGameCommand cmd = new AddGameCommand();
+			cmd.setParameters(getParameters(request));
+			if(!cmd.execute()){
+				rd = request.getRequestDispatcher("/error.jsp");
+			}else{
+				request.setAttribute("results", cmd.getResults());
+				rd = request.getRequestDispatcher(cmd.getForwardingPage());
+			}
+		}else if("addemployee".equalsIgnoreCase(requester)){
+			AddEmployeeCommand cmd = new AddEmployeeCommand();
+			cmd.setParameters(getParameters(request));
+			if(!cmd.execute()){
+				rd = request.getRequestDispatcher("/error.jsp");
+			}else{
+				request.setAttribute("results", cmd.getResults());
+				rd = request.getRequestDispatcher(cmd.getForwardingPage());
+			}
+
+			
 		}
 		rd.forward(request, response);
 	}

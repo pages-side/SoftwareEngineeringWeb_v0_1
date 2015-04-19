@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.business.Game;
 
+/**
+ * This returns an array list of all games who meet a query
+ *
+ */
 public class GameBean {
 	ArrayList<Game> gameList = null;
 	public GameBean(){

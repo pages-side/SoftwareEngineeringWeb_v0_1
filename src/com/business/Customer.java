@@ -1,13 +1,13 @@
 package com.business;
 
+/**
+ * Stores the customer as an object
+ *
+ */
 public class Customer {
 
 	private int cno;
 	private String cname;
-	private String street;
-	private String city;
-	private String state;
-	private String zip;
 	private String phone;
 	private String currentGame;
 	private String startTime;
@@ -15,54 +15,10 @@ public class Customer {
 	private String currentStatus;
 	private boolean memberStatus;
 	
-	public int getCompanyNo() {
-		return cno;
-	}
-	public void setCNo(int i) {
-		this.cno = i;
-	}
-	public String getCName() {
-		return cname;
-	}
-	public void setCName(String companyName) {
-		this.cname = companyName;
-	}
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String companyState) {
-		this.state = companyState;
-	}
-	public String getZip() {
-		return zip;
-	}
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public boolean getMemberStatus(){
-		return memberStatus;
-	}
-	public void setMemberStatus(boolean member){
-		this.memberStatus = member;
-	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 * A string builder for developers use
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -70,14 +26,6 @@ public class Customer {
 		builder.append(cno);
 		builder.append(", Customer's name=");
 		builder.append(cname);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", city=");
-		builder.append(city);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append(", zip=");
-		builder.append(zip);
 		builder.append(", phone=");
 		builder.append(phone);
 		builder.append(", member status=");
@@ -85,40 +33,117 @@ public class Customer {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	/**
+	 * @return the cno
+	 */
 	public int getCno() {
 		return cno;
 	}
+
+	/**
+	 * @param cno the cno to set
+	 */
 	public void setCno(int cno) {
 		this.cno = cno;
 	}
+
+	/**
+	 * @return the cname
+	 */
 	public String getCname() {
 		return cname;
 	}
+
+	/**
+	 * @param cname the cname to set
+	 */
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
+
+
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	/**
+	 * @return the currentGame
+	 */
 	public String getCurrentGame() {
 		return currentGame;
 	}
+
+	/**
+	 * @param currentGame the currentGame to set
+	 */
 	public void setCurrentGame(String currentGame) {
 		this.currentGame = currentGame;
 	}
+
+	/**
+	 * @return the startTime
+	 */
 	public String getStartTime() {
 		return startTime;
 	}
+
+	/**
+	 * @param startTime the startTime to set
+	 */
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
+
+	/**
+	 * @return the endTime
+	 */
 	public String getEndTime() {
 		return endTime;
 	}
+
+	/**
+	 * @param endTime the endTime to set
+	 */
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
+	/**
+	 * @return the currentStatus
+	 */
 	public String getCurrentStatus() {
 		return currentStatus;
 	}
+
+	/**
+	 * @param currentStatus the currentStatus to set
+	 */
 	public void setCurrentStatus(String currentStatus) {
 		this.currentStatus = currentStatus;
+	}
+
+	/**
+	 * @return the memberStatus
+	 */
+	public boolean isMemberStatus() {
+		return memberStatus;
+	}
+
+	/**
+	 * @param memberStatus the memberStatus to set
+	 */
+	public void setMemberStatus(boolean memberStatus) {
+		this.memberStatus = memberStatus;
 	}
 }

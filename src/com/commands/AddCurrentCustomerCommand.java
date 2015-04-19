@@ -13,6 +13,8 @@ public class AddCurrentCustomerCommand {
 	private String game;
 	private LandingPageBean results = new LandingPageBean();
 	private String forwardingPage = null;
+	
+	
 	public boolean execute(){
 		boolean isSuccess = false;
 		InsertCurrentCustomer da = new InsertCurrentCustomer();

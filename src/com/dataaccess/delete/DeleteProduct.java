@@ -14,7 +14,7 @@ public class DeleteProduct extends DbAccessor{
 	
 	public boolean execute(){
 		StringBuilder sb = new StringBuilder("");
-		sb.append("delete from products where pno='");
+		sb.append("delete from s_product where pno='");
 		sb.append(this.pno);
 		sb.append("'");
 		setQuery(sb.toString());

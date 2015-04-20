@@ -8,6 +8,10 @@ import com.command.parameters.CommandParameter;
 import com.dataaccess.insert.InsertCustomer;
 import com.dataaccess.select.SelectCustomer;
 
+/**
+ * This class returns a list of all customers who meet a query
+ *
+ */
 public class CustomerCommand {
 	
 	ArrayList<Customer> resultList = null;
@@ -16,29 +20,27 @@ public class CustomerCommand {
 	InsertCustomer insert = null;
 	private int cno = -1;
 	private String cName;
-	private String address;
-	private String city;
-	private String state;
-	private String zip;
 	private String phone;
 	private String sMemberStatus;
 	private String mode;
 	
 	String forwardingPage = null;
 	
+	/**
+	 * an empty constructor!
+	 */
 	public CustomerCommand(){
 		
 	}
+	/**feeds the query to SelectCustomer -> DbAccessor -> DbConn
+	 * @return a value to tell the program its ok to move on
+	 */
 	public boolean execute(){
 		boolean isSuccess = false;
 		if("search".equals(mode)){
 			select = new SelectCustomer();
 			select.setCno(cno);
 			select.setcName(cName);
-			select.setAddress(address);
-			select.setCity(city);
-			select.setState(state);
-			select.setZip(zip);
 			select.setPhone(phone);
 			select.setsMemberStatus(sMemberStatus);
 			
@@ -83,6 +85,9 @@ public class CustomerCommand {
 		}
 		return isSuccess;
 	}
+	/**This method uses a for loop and the CommandParameter to get needed attributes from the database
+	 * @param params
+	 */
 	public void setParameters(ArrayList<CommandParameter>params){
 		if(params != null && !params.isEmpty()){
 			for(int ii=0; ii< params.size(); ii++){
@@ -91,21 +96,6 @@ public class CustomerCommand {
 				}
 				if("cName".equals(params.get(ii).getName())){
 					cName = params.get(ii).getValue();
-				}
-				if("address".equals(params.get(ii).getName())){
-					address = params.get(ii).getValue();
-				}
-				if("city".equals(params.get(ii).getName())){
-					city = params.get(ii).getValue();
-				}
-				if("city".equals(params.get(ii).getName())){
-					city = params.get(ii).getValue();
-				}
-				if("state".equals(params.get(ii).getName())){
-					state = params.get(ii).getValue();
-				}
-				if("zip".equals(params.get(ii).getName())){
-					zip = params.get(ii).getValue();
 				}
 				if("phone".equals(params.get(ii).getName())){
 					phone = params.get(ii).getValue();
@@ -119,25 +109,53 @@ public class CustomerCommand {
 			}
 		}
 	}
-	public String getForwardingPage() {
-		return forwardingPage;
+	/**
+	 * @return the cno
+	 */
+	public int getCno() {
+		return cno;
 	}
-	public void setForwardingPage(String forwardingPage) {
-		this.forwardingPage = forwardingPage;
+	/**
+	 * @param cno the cno to set
+	 */
+	public void setCno(int cno) {
+		this.cno = cno;
 	}
-	public CustomerBean getBean() {
-		return bean;
+	/**
+	 * @return the cName
+	 */
+	public String getcName() {
+		return cName;
 	}
-	public void setBean(CustomerBean bean) {
-		this.bean = bean;
+	/**
+	 * @param cName the cName to set
+	 */
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
-	public String getMode() {
-		return mode;
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
 	}
-	public void setMode(String mode) {
-		this.mode = mode;
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	
-	
+	/**
+	 * @return the sMemberStatus
+	 */
+	public String getsMemberStatus() {
+		return sMemberStatus;
+	}
+	/**
+	 * @param sMemberStatus the sMemberStatus to set
+	 */
+	public void setsMemberStatus(String sMemberStatus) {
+		this.sMemberStatus = sMemberStatus;
+	}
 	
 }

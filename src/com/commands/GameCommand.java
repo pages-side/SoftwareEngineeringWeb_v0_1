@@ -10,6 +10,10 @@ public class GameCommand {
 	GameBean bean = new GameBean();
 	ArrayList<Game> resultList = null;
 	String forwardingPage = null;
+	
+	/**Uses GameBean to return all games 
+	 * @return a value telling the program its ok to move on  
+	 */
 	public boolean execute(){
 		boolean isSuccess = false;
 		SelectGame da = new SelectGame();
@@ -29,20 +33,50 @@ public class GameCommand {
 		forwardingPage = "showGames.jsp";
 		return isSuccess;
 	}
+	
+	
+	//Getters & Setters
+	/**not needed yet
+	 * @param params
+	 */
 	public void setParameters(ArrayList<Object>params){
 
 	}
-	public String getForwardingPage() {
-		return forwardingPage;
-	}
-	public void setForwardingPage(String forwardingPage) {
-		this.forwardingPage = forwardingPage;
-	}
+	/**
+	 * @return the bean
+	 */
 	public GameBean getBean() {
 		return bean;
 	}
-	public void setBean(GameBean gameBean) {
-		bean = gameBean;
+	/**
+	 * @param bean the bean to set
+	 */
+	public void setBean(GameBean bean) {
+		this.bean = bean;
+	}
+	/**
+	 * @return the resultList
+	 */
+	public ArrayList<Game> getResultList() {
+		return resultList;
+	}
+	/**
+	 * @param resultList the resultList to set
+	 */
+	public void setResultList(ArrayList<Game> resultList) {
+		this.resultList = resultList;
+	}
+	/**
+	 * @return the forwardingPage
+	 */
+	public String getForwardingPage() {
+		return forwardingPage;
+	}
+	/**
+	 * @param forwardingPage the forwardingPage to set
+	 */
+	public void setForwardingPage(String forwardingPage) {
+		this.forwardingPage = forwardingPage;
 	}
 	
 	

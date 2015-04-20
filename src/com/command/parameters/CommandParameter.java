@@ -1,5 +1,9 @@
 package com.command.parameters;
 
+/**
+ * This class is used in a for loop for all queries and .jsps to set parameters 
+ *
+ */
 public class CommandParameter {
 
 	private String name = null;
@@ -23,6 +27,10 @@ public class CommandParameter {
 		this.value = value;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 * A string builder for developers use
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

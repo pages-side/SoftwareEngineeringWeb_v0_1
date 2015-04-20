@@ -6,6 +6,10 @@ import com.beans.LandingPageBean;
 import com.command.parameters.CommandParameter;
 import com.dataaccess.insert.InsertCurrentCustomer;
 
+/**
+ * This class adds customers to the currently playing table
+ *
+ */
 public class AddCurrentCustomerCommand {
 	private String errorMessage = "";
 	private String cno;
@@ -15,6 +19,9 @@ public class AddCurrentCustomerCommand {
 	private String forwardingPage = null;
 	
 	
+	/**This method adds customers to the currently playing database
+	 * @return
+	 */
 	public boolean execute(){
 		boolean isSuccess = false;
 		InsertCurrentCustomer da = new InsertCurrentCustomer();
@@ -37,6 +44,9 @@ public class AddCurrentCustomerCommand {
 		}
 		return isSuccess;
 	}
+	/**This method uses a for loop and the CommandParameter to get needed attributes from the database
+	 * @param params
+	 */
 	public void setParameters(ArrayList<CommandParameter>params){
 		if(params != null && !params.isEmpty()){
 			for(int ii=0; ii< params.size(); ii++){
@@ -52,41 +62,77 @@ public class AddCurrentCustomerCommand {
 			}
 		}
 	}
+	/**
+	 * @return the errorMessage
+	 */
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+	/**
+	 * @param errorMessage the errorMessage to set
+	 */
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
+	/**
+	 * @return the cno
+	 */
 	public String getCno() {
 		return cno;
 	}
+	/**
+	 * @param cno the cno to set
+	 */
 	public void setCno(String cno) {
 		this.cno = cno;
 	}
+	/**
+	 * @return the cname
+	 */
 	public String getCname() {
 		return cname;
 	}
+	/**
+	 * @param cname the cname to set
+	 */
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
+	/**
+	 * @return the game
+	 */
 	public String getGame() {
 		return game;
 	}
+	/**
+	 * @param game the game to set
+	 */
 	public void setGame(String game) {
 		this.game = game;
 	}
+	/**
+	 * @return the results
+	 */
 	public LandingPageBean getResults() {
 		return results;
 	}
+	/**
+	 * @param results the results to set
+	 */
 	public void setResults(LandingPageBean results) {
 		this.results = results;
 	}
+	/**
+	 * @return the forwardingPage
+	 */
 	public String getForwardingPage() {
 		return forwardingPage;
 	}
-	public void setFowardingPage(String fowardingPage) {
-		this.forwardingPage = fowardingPage;
+	/**
+	 * @param forwardingPage the forwardingPage to set
+	 */
+	public void setForwardingPage(String forwardingPage) {
+		this.forwardingPage = forwardingPage;
 	}
 	
 }
